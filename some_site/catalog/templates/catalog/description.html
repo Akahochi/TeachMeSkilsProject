@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %} Devises {% endblock %}
+{% block content %}
+
+
+
+    <div class="card text-white bg-dark mb-3">
+        <h2 class="card-header"><span class="badge badge-primary"> {{ product.name }}</span></h2>
+        <div class="card-body">
+            <h5 class="card-title">Description:</h5>
+            <p class="card-text">{{ product.description|linebreaks }}</p>
+        </div>
+    </div>
+
+
+    {% if product.productspecificationvalue_set.all %}
+        <h2><span class="badge badge-primary"> Main Features: </span></h2>
+        <table class="table table-dark table-striped">
+            <tr>
+                <th>Характеристика</th>
+                <th>Значение</th>
+            </tr>
+            {% for specification_value in product.productspecificationvalue_set.all %}
+                <tr>
+                    <td>{{ specification_value.specification.name }}</td>
+                    <td>{{ specification_value.value }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <div class="col-sm">
+
+        {% if product.productimage_set.all %}
+            {% for product_image in product.productimage_set.all %}
+                <div>
+                    <img
+                            class="product-image"
+                            src="{{ product_image.image.url }}"
+                            alt="{{ product.name }}"
+                    >
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+    <h3 class="text-right"><span class="badge badge-dark">PRICE: {{ product.price }} $.USA </span></h3>
+
+
+    <form action="{% url 'cart:cart_add' product.id %}" class="text-right" method="post">
+
+        <h4><span class="badge badge-primary">{{ cart_product_form }}</span></h4>
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Add to cart">
+    </form>
+
+{% endblock %}
+

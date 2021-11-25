@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %} Devises {% endblock %}
+{% block content %}
+
+    <blockquote class="blockquote text-right">
+        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+        <footer class="blockquote-footer">Кто-то знаменитый в <cite title="Название источника">Название источника</cite>
+        </footer>
+    </blockquote>
+
+
+    {% for c in category %}
+        <div class="card text-white bg-dark mb-3">
+            <h2 class="card-header"><span class="badge badge-primary"> {{ c.name }}</span></h2>
+            <div class="card-body">
+                <h5 class="card-title">Description:</h5>
+                <p class="card-text">{{ c.description }}</p>
+                <a href="{% url 'catalog:category' c.slug %}" class="btn btn-primary">Go to category</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for c in cat %}
+        <div>
+            <a href="{% url 'catalog:category' c.slug %}">{{ c.name }}</a>
+        </div>
+    {% endfor %}
+
+
+
+{% endblock %}
+

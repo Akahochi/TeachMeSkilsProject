@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} Devises {% endblock %}
+{% block content %}
+
+
+    {% for c in products %}
+        <div class="card text-white bg-dark mb-3">
+            <h2 class="card-header"><span class="badge badge-primary"> {{ c.name }}</span></h2>
+            <div class="card-body">
+                <h5 class="card-title">Description:</h5>
+                <p class="card-text">{{ c.description|linebreaks }}</p>
+                <a href="{% url 'catalog:product' c.slug %}" class="btn btn-primary">Go to devise</a>
+            </div>
+        </div>
+        {% if c.productimage_set.all %}
+            {% for product_image in c.productimage_set.all %}
+                <div>
+                    <img
+                            class="product-image"
+                            src="{{ product_image.image.url }}"
+                            alt="{{ product.name }}"
+                    >
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+
+
+    <h5 class="text-right"><span
+            class="badge badge-danger">{% include "catalog/paginator.html" with page=posts %}</span></h5>
+
+{% endblock %}
