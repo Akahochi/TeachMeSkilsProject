@@ -1,0 +1,41 @@
+{% extends "orders/order/order_base.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+
+
+    <div class="card text-white bg-dark mb-3">
+        <h2 class="card-header"><span class="badge badge-primary"> Checkout</span></h2>
+        <div class="card-body">
+            <h5 class="card-title">Your order</h5>
+            <p class="card-text">
+            <ul>
+                <div class="form-group">
+                    {% for item in cart %}
+                        <li>
+                            {{ item.quantity }}x {{ item.product.name }}
+                            <span>{{ item.total_price }}</span>
+                        </li>
+                    {% endfor %}
+                </div>
+            </ul>
+            <p>
+            <h3>
+                <span class="badge badge-warning">Total: {{ cart.get_total_price }}</span>
+            </h3></p>
+        </div>
+    </div>
+
+
+    <form action="." method="post" class="order-form">
+        {{ form.as_p }}
+        <p>
+        <h3>
+            <input type="submit" class="btn btn-primary" value="Place order">
+        </h3>
+        </p>
+        {% csrf_token %}
+    </form>
+
+{% endblock %}

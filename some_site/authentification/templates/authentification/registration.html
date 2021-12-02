@@ -1,0 +1,37 @@
+{% extends 'authentification/auth_base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}Регистрация{% endblock %}
+
+
+
+
+{% block content %}
+
+
+    <form method="post" action="{% url 'authentification:registration' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        {#        <button type="submit">Зарегистрироваться</button>#}
+        <button type="submit" class="btn btn-primary mb-2">Registration</button>
+    </form>
+
+
+{% endblock %}
